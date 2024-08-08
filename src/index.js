@@ -5,8 +5,21 @@ import connectDB from "./db/index.js";
     path:'./env'
  })
 
-connectDB();
+connectDB()
+.then(()=>{
 
+  app.on("error",(error)=>{
+    console.error("Error!",error);
+    throw error
+  })
+
+  app.listen(process.env.PORT||8000,()=>{
+    console.log(`server ois running at port number at port ${process.env.PORT}`)
+  })
+})
+.catch((err)=>{
+  console.log("MONGO db connection failed!!",err);
+})
 
 
 
